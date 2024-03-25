@@ -1,7 +1,9 @@
 <template>
-  <div class="template-default flex flex-column">
-    <HeaderMenu />
-    <slot></slot>
+  <div class="template-default flex flex-col">
+    <header-menu />
+    <div class="container mx-auto">
+      <slot></slot>
+    </div>
   </div>
 </template>
 
@@ -10,5 +12,7 @@ import HeaderMenu from '@/components/HeaderMenu.vue';
 </script>
 
 <style lang="scss" scoped>
-.template-default {}
+.template-default {
+  flex-direction: column;
+}
 </style>

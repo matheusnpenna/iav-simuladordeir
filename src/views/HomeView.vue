@@ -3,5 +3,6 @@
 
 <template>
   <main>
+    SIMULATOR
   </main>
 </template>
