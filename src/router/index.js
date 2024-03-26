@@ -14,9 +14,18 @@ const routes = [
     }
   },
   {
-    path: '/about',
+    path: '/info',
     name: 'about',
     component: () => import('@/views/AboutView.vue'),
+    meta: {
+      template: DefaultTemplate,
+      protected: false,
+    }
+  },
+  {
+    path: '/como-doar',
+    name: 'how-donate',
+    component: () => import('@/views/TutorialView.vue'),
     meta: {
       template: DefaultTemplate,
       protected: false,

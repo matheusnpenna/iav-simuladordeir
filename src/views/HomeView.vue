@@ -15,7 +15,7 @@
         <el-button class="mb-8" type="primary" :disabled="!is_valid_fields" @click="calculate">Calcular
           doação</el-button>
         <template v-if="show_projects">
-          <h2 class="text-2xl font-semibold mb-2">Valor permitido para doação: {{ donation_value }}</h2>
+          <h2 class="text-2xl font-semibold mb-2">Valor máximo permitido para doação: R$ {{ donation_value }}</h2>
           <span class="text-sm text-slate-500 mb-8">Clique nos projetos abaixo para simular quanto doar para cada
             um</span>
           <el-card v-for="(p, i) in projects[people_type]" :key="i" style="max-width: 480px" class="mb-4 cursor-pointer"
@@ -42,21 +42,25 @@
           </el-card>
         </template>
       </div>
-      <div class="flex flex-col p-4">
-
+      <div class="flex flex-col p-4 divide-y divide-gray-400">
+        <div v-for="(p, i) in selected_projects" :key="`don-${i}`" class="mb-4 pt-4">
+          <h4 class="text-xl">{{ p.name }}</h4>
+          <div class="text-md">Valor: R$ {{ p.donate_value }}</div>
+          <a href="/como-doar" class="underline text-sky-500 cursor-pointer">Clique aqui para aprender como doar</a>
+        </div>
       </div>
     </div>
   </main>
 </template>
 <script setup>
-import { ref, reactive, computed } from 'vue'
-import { PROJECTS_BY_PEOPLE_TYPE } from "@/constants";
+import { ref, computed, watch } from 'vue'
+import { PROJECTS_BY_PEOPLE_TYPE, MAX_PERCENT_BY_PEOPLE_TYPE } from "@/constants";
 
 const value = ref('')
 const people_type = ref('')
 const donation_value = ref('-')
 const show_projects = ref(false)
-const selected_projects = reactive([])
+const selected_projects = ref([])
 const is_valid_fields = computed(() => value.value && people_type.value)
 const projects = PROJECTS_BY_PEOPLE_TYPE;
 
@@ -67,8 +71,14 @@ const projects = PROJECTS_BY_PEOPLE_TYPE;
 
 // const parser = value => value.replace(/R\$ [A-Za-z0-9]+/g, '');
 
+watch(people_type, val => {
+  donation_value.value = (100 * MAX_PERCENT_BY_PEOPLE_TYPE[val]) / value.value;
+  selected_projects.value = [];
+})
+
 const calculate = () => {
   if (people_type.value && value.value) {
+    donation_value.value = (MAX_PERCENT_BY_PEOPLE_TYPE[people_type.value] / 100) * value.value;
     show_projects.value = true;
   }
 };
@@ -79,6 +89,7 @@ const on_select = project => {
   } else {
     selected_projects.value.push({
       ...project,
+      donate_value: (project.percent / 100) * donation_value.value
     });
   }
 }

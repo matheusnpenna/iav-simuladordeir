@@ -76,3 +76,8 @@ export const PROJECTS_BY_PEOPLE_TYPE = {
     },
   ]
 };
+
+export const MAX_PERCENT_BY_PEOPLE_TYPE = {
+  juridica: 8,
+  fisica: 6
+};
