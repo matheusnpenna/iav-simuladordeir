@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "iav-projects"
+  },
+  "targets": {
+    "iav-projects": {
+      "hosting": {
+        "simuladordeir": [
+          "simuladordeir"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

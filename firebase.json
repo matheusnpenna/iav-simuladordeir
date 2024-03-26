@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "simuladordeir",
+      "public": "dist",
+      "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    }
+  ]
+}
